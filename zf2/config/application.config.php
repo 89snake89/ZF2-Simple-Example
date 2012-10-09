@@ -1,7 +1,8 @@
 <?php
 return array(
     'modules' => array(
-        'Application',
+        'Application', 
+    	'Album',
     	'Prova'
     ),
     'module_listener_options' => array(
