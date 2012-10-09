@@ -1,0 +1,85 @@
+<?php 
+use Zend\Authentication\Storage\Session;
+?>
+<html>
+	<head><title>Benvenuto</title></head>
+	<body>
+		<h2>
+		<?php 
+			$session = new Session();
+			switch ($session->read()->Sesso)
+			{
+				case 'F': 
+						echo "Benvenuta ";
+						break;
+				case 'M': 
+						echo "Benvenuto ";
+						break;
+			}
+			echo $session->read()->Nome ." ". $session->read()->Cognome;
+			//\Zend\Debug\Debug::dump($session->read()->Nome);
+		?></h2>
+		<h3><a href="<?php echo $this->url('prova',
+            array('action'=>'logout'));?>">Log Out</a></h3>
+        <h3><a href="<?php echo $this->url('auto',
+            array('action'=>'inserisci'));?>">Inserisci un auto!</a></h3>
+        <h3><a href="<?php echo $this->url('auto',
+            array('action'=>'acquisto'));?>">Negozio auto</a></h3>    
+        <h3><a href="<?php echo $this->url('mail',
+            array('action'=>'index'));?>">Mail</a></h3>    
+	<h2>Auto in tuo possesso:</h2>
+	<?php if(isset($MyCars)){?>
+	<table class="table">
+	<tr>
+	    <th>Marca</th>
+	    <th>Modello</th>
+	    <th>Colore</th>
+	    <th>Prezzo</th>
+	    <th>Anno</th>
+	    <th>&nbsp;</th>
+	</tr>
+	
+	<?php 
+	foreach($MyCars as $car) :  ?>
+	<tr>
+	    <td><?php echo $this->escapeHtml($car->Marca);?></td>
+	    <td><?php echo $this->escapeHtml($car->Modello);?></td>
+	    <td><?php echo $this->escapeHtml($car->Colore);?></td> 
+	    <td><?php echo $this->escapeHtml($car->Prezzo);?></td>     
+	    <td><?php echo $this->escapeHtml($car->Anno);?></td>    <td>
+	        <a href="<?php echo $this->url('auto',
+	            array('action'=>'vendi', 'id' => $car->Id_Auto));?>">Vendi</a>
+	    </td>
+	</tr>
+	<?php endforeach; ?>
+	</table>
+	<?php }else{
+		echo '<h3>Non hai auto comprane subito una!</h3>';
+	}?>
+	<?php if(isset($carInsurance)){	?>
+	<h2>Auto da assicurare:</h2>
+	<table class="table">
+	<tr>
+	    <th>Marca</th>
+	    <th>Modello</th>
+	    <th>Colore</th>
+	    <th>Prezzo</th>
+	    <th>Anno</th>
+	    <th>&nbsp;</th>
+	</tr>
+	<?php foreach($carInsurance as $car) :  ?>
+	<tr>
+	    <td><?php echo $this->escapeHtml($car->Marca);?></td>
+	    <td><?php echo $this->escapeHtml($car->Modello);?></td>
+	    <td><?php echo $this->escapeHtml($car->Colore);?></td> 
+	    <td><?php echo $this->escapeHtml($car->Prezzo);?></td>     
+	    <td><?php echo $this->escapeHtml($car->Anno);?></td>    <td>
+	        <a href="<?php echo $this->url('auto',
+	            array('action'=>'assicura', 'id' => $car->Id_Auto));?>">Assicura</a>
+	    </td>
+	</tr>
+	<?php endforeach; ?>
+	</table>
+	<?php }?>
+	</body>
+</html>

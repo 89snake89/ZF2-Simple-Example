@@ -1,0 +1,15 @@
+<h3><a href="<?php echo $this->url('prova',
+            array('action'=>'logout'));?>">Log Out</a></h3>
+<h3><a href="<?php echo $this->url('auto',
+            array('action'=>'index'));?>">Torna</a></h3>
+<?php 
+	$form = $this->form;
+	$form->prepare();
+	echo $this->form()->openTag($form);
+	echo $this->formrow($form->get("Marca"));
+	echo $this->formrow($form->get("Modello"));
+	echo $this->formrow($form->get("Colore"));
+	echo $this->formrow($form->get("Prezzo"));
+	echo $this->formrow($form->get("Anno"));
+	echo $this->formrow($form->get("submit"));
+	echo $this->form()->closeTag($form);

@@ -1,0 +1,14 @@
+<h2><?php echo $this->fabio; ?></h2>
+
+<?php 
+	$form = $this->form;
+	$form->prepare();
+	echo $this->form()->openTag($form);
+	echo $this->formrow($form->get("Nome"));
+	echo $this->formrow($form->get("Cognome"));
+	echo $this->formrow($form->get("Mail"));
+	echo $this->formrow($form->get("Psw"));
+	echo $this->formrow($form->get("Tipo_Patente"));
+	echo $this->formrow($form->get("Sesso"));
+	echo $this->formrow($form->get("submit"));
+	echo $this->form()->closeTag($form);

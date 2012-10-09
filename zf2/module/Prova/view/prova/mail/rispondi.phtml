@@ -1,0 +1,33 @@
+<?php 
+use Zend\Authentication\Storage\Session;
+?>
+<html>
+	<head><title>Benvenuto</title></head>
+	<body>
+		<h2>
+		<?php 
+			$session = new Session();
+			switch ($session->read()->Sesso)
+			{
+				case 'F': 
+						echo "Benvenuta ";
+						break;
+				case 'M': 
+						echo "Benvenuto ";
+						break;
+			}
+			echo $session->read()->Nome ." ". $session->read()->Cognome;
+			//\Zend\Debug\Debug::dump($session->read()->Nome);
+		?></h2>
+<h3><a href="<?php echo $this->url('prova',
+            array('action'=>'logout'));?>">Log Out</a></h3>
+<h3><a href="<?php echo $this->url('mail',
+            array('action'=>'index'));?>">Torna</a></h3>
+<?php 
+	$form = $this->form;
+	$form->prepare();
+	echo $this->form()->openTag($form);
+	echo $this->formrow($form->get("Message"));
+	
+	echo $this->formrow($form->get("submit"));
+	echo $this->form()->closeTag($form);

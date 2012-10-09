@@ -1,0 +1,58 @@
+<?php 
+use Zend\Authentication\Storage\Session;
+?>
+
+
+<html>
+	<head><title>Benvenuto</title></head>
+	<body>
+		<h2>
+		<?php 
+			$session = new Session();
+			switch ($session->read()->Sesso)
+			{
+				case 'F': 
+						echo "Benvenuta ";
+						break;
+				case 'M': 
+						echo "Benvenuto ";
+						break;
+			}
+			echo $session->read()->Nome ." ". $session->read()->Cognome;
+			//\Zend\Debug\Debug::dump($session->read()->Nome);
+		?></h2>
+		<h3><a href="<?php echo $this->url('prova',
+            array('action'=>'logout'));?>">Log Out</a></h3>
+        <h3><a href="<?php echo $this->url('auto',
+            array('action'=>'inserisci'));?>">Inserisci un auto!</a></h3>
+        <h3><a href="<?php echo $this->url('auto',
+            array('action'=>'index'));?>">Torna</a></h3>    
+	<h2>Auto in vendita:</h2>
+	<table class="table">
+	<tr>
+	    <th>Marca</th>
+	    <th>Modello</th>
+	    <th>Colore</th>
+	    <th>Prezzo</th>
+	    <th>Anno</th>
+	    <th>&nbsp;</th>
+	</tr>
+	<?php if(isset($cars)){?>
+	<?php 
+	foreach($cars as $car) :  ?>
+	<tr>
+	    <td><?php echo $this->escapeHtml($car->Marca);?></td>
+	    <td><?php echo $this->escapeHtml($car->Modello);?></td>
+	    <td><?php echo $this->escapeHtml($car->Colore);?></td> 
+	    <td><?php echo $this->escapeHtml($car->Prezzo);?></td>     
+	    <td><?php echo $this->escapeHtml($car->Anno);?></td>    <td>
+	        <a href="<?php echo $this->url('auto',
+	            array('action'=>'compra', 'id' => $car->Id_Auto));?>">Compra subito!</a>
+	        
+	    </td>
+	</tr>
+	<?php endforeach; ?>
+	</table>
+	<?php }?>
+	</body>
+</html>

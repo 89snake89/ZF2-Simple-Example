@@ -1,0 +1,89 @@
+<?php 
+use Prova\Model\User;
+
+use Prova\Model\UserTable;
+
+use Zend\Authentication\Storage\Session;
+
+?>
+<html>
+	<head><title>Benvenuto</title></head>
+	<body>
+		<h2>
+		<?php 
+			$session = new Session();
+			switch ($session->read()->Sesso)
+			{
+				case 'F': 
+						echo "Benvenuta ";
+						break;
+				case 'M': 
+						echo "Benvenuto ";
+						break;
+			}
+			echo $session->read()->Nome ." ". $session->read()->Cognome;
+			//\Zend\Debug\Debug::dump($session->read()->Nome);
+		?></h2>
+		<h3><a href="<?php echo $this->url('prova',
+            array('action'=>'logout'));?>">Log Out</a></h3>
+        <h3><a href="<?php echo $this->url('mail',
+            array('action'=>'invia'));?>">Nuova mail</a></h3>
+        <h3><a href="<?php echo $this->url('auto',
+            array('action'=>'index'));?>">Torna</a></h3>    
+	<h2>Messaggi ricevuti:</h2>
+	<?php if(isset($receivedMessage)){?>
+	<table class="table">
+	<tr>
+	    <th>Da:</th>
+	    <th>Messaggio</th>
+	    <th>Data</th>
+	    <th>Ora</th>
+	    <th>&nbsp;</th>
+	</tr>
+	
+	<?php 
+	foreach($receivedMessage as $mex) : //\Zend\Debug\Debug::dump($mex); ?>
+	<tr>
+	    <td><?php echo $this->escapeHtml($mex->Sender);?></td>
+	    <td><?php echo $this->escapeHtml($mex->Message);?></td>
+	    <td><?php echo $this->escapeHtml($mex->Date);?></td> 
+	    <td><?php echo $this->escapeHtml($mex->Hour);?></td>     
+	    <td>
+	        <a href="<?php echo $this->url('mail',
+	            array('action'=>'leggi', 'id' => $mex->Id_Mess));?>">Leggi</a>
+	        <a href="<?php echo $this->url('mail',
+	            array('action'=>'rispondi', 'id' => $mex->Id_Mess));?>">Rispondi</a>
+	    </td>
+	</tr>
+	<?php endforeach; ?>
+	</table>
+	<?php }?>
+	
+	<h2>Messaggi inviati:</h2>
+	<?php if(isset($sentMessage)){?>
+	<table class="table">
+	<tr>
+	    <th>A:</th>
+	    <th>Messaggio</th>
+	    <th>Data</th>
+	    <th>Ora</th>
+	    <th>&nbsp;</th>
+	</tr>
+	
+	<?php 
+	foreach($sentMessage as $mex) : //\Zend\Debug\Debug::dump($mex); ?>
+	<tr>
+	    <td><?php echo $this->escapeHtml($mex->Receiver);?></td>
+	    <td><?php echo $this->escapeHtml($mex->Message);?></td>
+	    <td><?php echo $this->escapeHtml($mex->Date);?></td> 
+	    <td><?php echo $this->escapeHtml($mex->Hour);?></td>     
+	    <td>
+	        <a href="<?php echo $this->url('mail',
+	            array('action'=>'leggi', 'id' => $mex->Id_Mess));?>">Leggi</a>
+	    </td>
+	</tr>
+	<?php endforeach; ?>
+	</table>
+	<?php }?>
+	</body>
+</html>

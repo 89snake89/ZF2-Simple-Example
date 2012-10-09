@@ -1,0 +1,53 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'My albums';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p><a href="<?php echo $this->url('album', array(
+        'action'=>'add'));?>">Add new album</a></p>
+
+
+<p><a href="<?php echo $this->url('album', array(
+        'action'=>'find'));?>">Find album</a></p>
+        
+<h2>Cerca per artista:</h2>
+<?php 
+	$form = $this->form;
+	$form->setAttribute('action', $this->url('album', array('action' => 'find')));
+	$form->prepare();
+	
+	echo $this->form()->openTag($form);
+	echo $this->formHidden($form->get('id'));
+	//echo $this->formRow($form->get('title'));
+	echo $this->formRow($form->get('artist'));
+	//echo $this->formRow($form->get('year'));
+	echo $this->formSubmit($form->get('submit'));
+	echo $this->form()->closeTag();
+?>
+
+<table class="table">
+<tr>
+    <th>Title</th>
+    <th>Artist</th>
+    <th>Year</th>
+    <th>&nbsp;</th>
+</tr>
+<?php if(isset($albums)){?>
+<?php 
+foreach($albums as $album) : var_dump($album)?>
+<tr>
+    <td><?php echo $this->escapeHtml($album->title);?></td>
+    <td><?php echo $this->escapeHtml($album->artist);?></td>    
+    <td><?php echo $this->escapeHtml($album->year);?></td>    <td>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'edit', 'id' => $album->id));?>">Edit</a>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'delete', 'id' => $album->id));?>">Delete</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+<?php }?>
